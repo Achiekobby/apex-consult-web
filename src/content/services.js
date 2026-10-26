@@ -58,26 +58,7 @@ export const services = [
     benefits:
       "Greater availability, resilience, flexibility, and support predictability.",
   },
-  {
-    slug: "coaching-training",
-    navLabel: "Coaching & Training",
-    title: "Coaching, Training & Professional Development",
-    headline: "Developing Skills. Building Confidence. Empowering Professionals.",
-    summary:
-      "Practical training, coaching, and mentoring for teams adopting new technology and ways of working.",
-    offerings: [
-      "Software development: PHP, Laravel, React, Java, Bootstrap, Python, SQL, and MongoDB",
-      "IT service management and ITIL-aligned practices",
-      "Project management, Agile, Scrum, PRINCE2, and PMP-aligned preparation",
-      "Cybersecurity, ethical hacking, and penetration testing fundamentals",
-      "Data protection, privacy, and cyber awareness",
-      "Tailored corporate workshops, leadership coaching, and mentoring",
-    ],
-    benefits:
-      "Improved workplace capability and better adoption of technology.",
-    constraint:
-      "Training topics are planned. Apex Point does not claim awarding-body accreditation.",
-  },
+
   {
     slug: "security-systems",
     navLabel: "Security Systems",
@@ -115,6 +96,26 @@ export const services = [
     ],
     benefits:
       "Better risk visibility, stronger controls, and improved resilience.",
+  },
+  {
+    slug: "coaching-training",
+    navLabel: "Coaching & Training",
+    title: "Coaching, Training & Professional Development",
+    headline: "Developing Skills. Building Confidence. Empowering Professionals.",
+    summary:
+      "Practical training, coaching, and mentoring for teams adopting new technology and ways of working.",
+    offerings: [
+      "Software development: PHP, Laravel, React, Java, Bootstrap, Python, SQL, and MongoDB",
+      "IT service management and ITIL-aligned practices",
+      "Project management, Agile, Scrum, PRINCE2, and PMP-aligned preparation",
+      "Cybersecurity, ethical hacking, and penetration testing fundamentals",
+      "Data protection, privacy, and cyber awareness",
+      "Tailored corporate workshops, leadership coaching, and mentoring",
+    ],
+    benefits:
+      "Improved workplace capability and better adoption of technology.",
+    constraint:
+      "",
   },
 ]
 
