@@ -84,7 +84,19 @@ export default function EnquiryPage({ intent }) {
                         <Icon aria-hidden="true" className="mt-0.5 size-4 shrink-0 text-gold" />
                         <span>
                           <span className="block text-mist">{detail.label}</span>
-                          <span className="font-medium text-white">{detail.value}</span>
+                          {detail.href ? (
+                            <a
+                              href={detail.href}
+                              className="inline-flex min-h-11 items-center font-medium text-white transition-colors duration-200 hover:text-gold"
+                              {...(detail.href.startsWith("http")
+                                ? { target: "_blank", rel: "noopener noreferrer" }
+                                : {})}
+                            >
+                              {detail.value}
+                            </a>
+                          ) : (
+                            <span className="font-medium text-white">{detail.value}</span>
+                          )}
                         </span>
                       </li>
                     )

@@ -16,9 +16,9 @@ export const proposedOfferingNote =
 
 export const contactDetails = [
   { label: "Registered office", value: "Accra, Ghana" },
-  { label: "Telephone", value: "To be confirmed" },
-  { label: "Business email", value: "info@apexpoint.com" },
-  { label: "WhatsApp", value: "To be confirmed" },
+  { label: "Telephone", value: "026 600 0912", href: "tel:+233266000912" },
+  { label: "Business email", value: "info@apexpoint.com", href: "mailto:info@apexpoint.com" },
+  { label: "WhatsApp", value: "055 814 8715", href: "https://wa.me/233558148715" },
   { label: "Business hours", value: "9:00 AM - 5:00 PM GMT" },
 ]
 

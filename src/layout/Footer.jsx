@@ -57,7 +57,19 @@ export default function Footer() {
             {contactDetails.map((detail) => (
               <li key={detail.label} className="border-l border-white/20 pl-4">
                 <span className="block text-mist">{detail.label}</span>
-                {detail.value}
+                {detail.href ? (
+                  <a
+                    href={detail.href}
+                    className="inline-flex min-h-11 items-center transition-colors duration-200 hover:text-gold"
+                    {...(detail.href.startsWith("http")
+                      ? { target: "_blank", rel: "noopener noreferrer" }
+                      : {})}
+                  >
+                    {detail.value}
+                  </a>
+                ) : (
+                  detail.value
+                )}
               </li>
             ))}
           </ul>
