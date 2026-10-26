@@ -19,8 +19,8 @@ export const legalPages = {
         body: "Full name, organisation, business email, telephone or WhatsApp, service of interest, enquiry type, project description, and an optional budget or timeline. The privacy consent checkbox is required before a message can be submitted.",
       },
       {
-        heading: "What is not in place yet",
-        body: "The site does not yet deliver enquiries to a mailbox. Do not submit personal information you expect the company to receive, store, or reply to until the contact details and this notice are confirmed.",
+        heading: "Where an enquiry goes",
+        body: "A completed enquiry is emailed to info@apexpoint.com so Apex Point can read it and reply. FormSubmit, the form delivery service used by this site, forwards the message. Sending an enquiry does not by itself create a client contract.",
       },
     ],
   },
@@ -38,7 +38,7 @@ export const legalPages = {
       },
       {
         heading: "No client engagement is created here",
-        body: "Browsing the site, or completing the enquiry form once delivery is enabled, does not create a contract. Scope, fees, and responsibilities are agreed separately.",
+        body: "Browsing the site, or sending an enquiry, does not create a contract. Scope, fees, and responsibilities are agreed separately.",
       },
       {
         heading: "Accuracy",

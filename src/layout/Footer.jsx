@@ -1,4 +1,5 @@
 import { Link } from "react-router"
+import ContactDetailValue from "../components/ui/ContactDetailValue"
 import { company, contactDetails, legalLinks, primaryNav } from "../content/site"
 import { services } from "../content/services"
 
@@ -57,19 +58,11 @@ export default function Footer() {
             {contactDetails.map((detail) => (
               <li key={detail.label} className="border-l border-white/20 pl-4">
                 <span className="block text-mist">{detail.label}</span>
-                {detail.href ? (
-                  <a
-                    href={detail.href}
-                    className="inline-flex min-h-11 items-center transition-colors duration-200 hover:text-gold"
-                    {...(detail.href.startsWith("http")
-                      ? { target: "_blank", rel: "noopener noreferrer" }
-                      : {})}
-                  >
-                    {detail.value}
-                  </a>
-                ) : (
-                  detail.value
-                )}
+                <ContactDetailValue
+                  detail={detail}
+                  linkClassName="inline-flex min-h-11 items-center transition-colors duration-200 hover:text-gold"
+                  plainClassName="inline-flex min-h-11 items-center"
+                />
               </li>
             ))}
           </ul>

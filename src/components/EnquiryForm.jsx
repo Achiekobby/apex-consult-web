@@ -1,7 +1,7 @@
 import { useEffect, useId, useRef, useState } from "react"
 import { ArrowRight, CircleAlert, Info } from "lucide-react"
 import { Link, useSearchParams } from "react-router"
-import { enquiryTypes } from "../content/enquiry"
+import { enquiryAcknowledgement, enquiryTypes } from "../content/enquiry"
 import { submitEnquiry } from "../content/submitEnquiry"
 import { services } from "../content/services"
 
@@ -62,7 +62,9 @@ export default function EnquiryForm({ defaultType }) {
     enquiryType: params.get("type") || defaultType,
   })
   const [errors, setErrors] = useState({})
-  const [status, setStatus] = useState("")
+  const [status, setStatus] = useState(null)
+  const [submitting, setSubmitting] = useState(false)
+  const honeyRef = useRef(null)
 
   useEffect(() => {
     if (Object.keys(errors).length > 0) summaryRef.current?.focus()
@@ -77,15 +79,34 @@ export default function EnquiryForm({ defaultType }) {
     setValues((current) => ({ ...current, [name]: type === "checkbox" ? checked : value }))
   }
 
-  function handleSubmit(event) {
+  async function handleSubmit(event) {
     event.preventDefault()
+    if (submitting) return
+
     const nextErrors = validate(values)
     setErrors(nextErrors)
-    setStatus("")
+    setStatus(null)
     if (Object.keys(nextErrors).length > 0) return
 
-    const result = submitEnquiry(values)
-    setStatus(result.message)
+    if (honeyRef.current?.value) {
+      setStatus({ type: "success", message: enquiryAcknowledgement })
+      return
+    }
+
+    setSubmitting(true)
+    try {
+      const result = await submitEnquiry(values)
+      setStatus({ type: result.delivered ? "success" : "error", message: result.message })
+      if (result.delivered) {
+        setValues({
+          ...emptyValues,
+          service: serviceIsKnown ? requestedService : "",
+          enquiryType: params.get("type") || defaultType,
+        })
+      }
+    } finally {
+      setSubmitting(false)
+    }
   }
 
   const field = (name) => ({
@@ -97,7 +118,16 @@ export default function EnquiryForm({ defaultType }) {
   })
 
   return (
-    <form className="space-y-6" noValidate onSubmit={handleSubmit}>
+    <form className="relative space-y-6" noValidate aria-busy={submitting} onSubmit={handleSubmit}>
+      <input
+        ref={honeyRef}
+        type="text"
+        name="_honey"
+        tabIndex={-1}
+        autoComplete="off"
+        aria-hidden="true"
+        className="absolute -left-[9999px] h-px w-px overflow-hidden"
+      />
       {Object.keys(errors).length > 0 ? (
         <div
           ref={summaryRef}
@@ -128,10 +158,16 @@ export default function EnquiryForm({ defaultType }) {
           ref={statusRef}
           tabIndex={-1}
           role="status"
-          className="flex items-start gap-3 rounded border border-gold/50 bg-gold/10 p-4 text-sm leading-relaxed text-navy"
+          className={`flex items-start gap-3 rounded border p-4 text-sm leading-relaxed text-navy ${
+            status.type === "error" ? "border-danger/40 bg-danger/5" : "border-gold/50 bg-gold/10"
+          }`}
         >
-          <Info aria-hidden="true" className="mt-0.5 size-4 shrink-0" />
-          {status}
+          {status.type === "error" ? (
+            <CircleAlert aria-hidden="true" className="mt-0.5 size-4 shrink-0 text-danger" />
+          ) : (
+            <Info aria-hidden="true" className="mt-0.5 size-4 shrink-0" />
+          )}
+          {status.message}
         </p>
       ) : null}
 
@@ -194,9 +230,10 @@ export default function EnquiryForm({ defaultType }) {
 
       <button
         type="submit"
-        className="group inline-flex min-h-12 w-full cursor-pointer items-center justify-center gap-3 bg-navy px-6 text-sm font-semibold text-white transition-colors duration-300 hover:bg-blue sm:w-auto"
+        disabled={submitting}
+        className="group inline-flex min-h-12 w-full cursor-pointer items-center justify-center gap-3 bg-navy px-6 text-sm font-semibold text-white transition-colors duration-300 hover:bg-blue disabled:cursor-wait disabled:opacity-70 sm:w-auto"
       >
-        Prepare enquiry
+        {submitting ? "Sending…" : "Send enquiry"}
         <ArrowRight aria-hidden="true" className="size-4 text-gold transition-transform duration-300 group-hover:translate-x-1" />
       </button>
     </form>

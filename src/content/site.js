@@ -14,11 +14,22 @@ export const company = {
 export const proposedOfferingNote =
   "We transform complex business challenges into intuitive, reliable digital solutions that connect people, processes, and technology."
 
+const phoneLines = [
+  { value: "0558148715", tel: "tel:+233558148715", whatsapp: "https://wa.me/233558148715" },
+  { value: "0266000912", tel: "tel:+233266000912", whatsapp: "https://wa.me/233266000912" },
+]
+
 export const contactDetails = [
   { label: "Registered office", value: "Accra, Ghana" },
-  { label: "Telephone", value: "026 600 0912", href: "tel:+233266000912" },
+  {
+    label: "Telephone",
+    links: phoneLines.map((line) => ({ value: line.value, href: line.tel })),
+  },
   { label: "Business email", value: "info@apexpoint.com", href: "mailto:info@apexpoint.com" },
-  { label: "WhatsApp", value: "055 814 8715", href: "https://wa.me/233558148715" },
+  {
+    label: "WhatsApp",
+    links: phoneLines.map((line) => ({ value: line.value, href: line.whatsapp })),
+  },
   { label: "Business hours", value: "9:00 AM - 5:00 PM GMT" },
 ]
 

@@ -1,3 +1,5 @@
+export const calendlyBookingUrl = "https://calendly.com/johnny-ofori/apex-point-meeting"
+
 export const enquiryTypes = [
   { value: "consultation", label: "Consultation" },
   { value: "quotation", label: "Quotation" },
@@ -26,7 +28,7 @@ export const enquiryPages = {
     eyebrow: "Contact Us",
     title: "Request a Quote",
     summary:
-      "Describe the service and the work you want priced. Quotation enquiries are reviewed once a confirmed mailbox is in place.",
+      "Describe the service and the work you want priced. The request is emailed to Apex Point.",
     enquiryType: "quotation",
   },
   consultation: {
@@ -43,7 +45,4 @@ export const enquiryPages = {
 }
 
 export const enquiryAcknowledgement =
-  "Thank you for contacting APEX POINT CONSULT LTD. Your enquiry has been received. Our team will review the information and respond through the contact details provided."
-
-export const enquiryPendingDelivery =
-  "This form is not sending messages yet. A confirmed business email is still required before an enquiry can be delivered."
+  "Thank you for contacting APEX POINT CONSULT LTD. Your enquiry has been sent to info@apexpoint.com. Our team will review it and respond through the contact details you provided."

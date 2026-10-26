@@ -1,7 +1,10 @@
 import { Clock, MapPin, MessageCircle, Phone, Mail } from "lucide-react"
+import CalendlyEmbed from "../components/CalendlyEmbed"
 import EnquiryForm from "../components/EnquiryForm"
+import ContactDetailValue from "../components/ui/ContactDetailValue"
 import ImageSlot from "../components/ui/ImageSlot"
 import Reveal from "../components/ui/Reveal"
+import SectionHeading from "../components/ui/SectionHeading"
 import { enquiryPages } from "../content/enquiry"
 import { contactDetails } from "../content/site"
 import PageFrame from "../layout/PageFrame"
@@ -18,6 +21,12 @@ const steps = [
   { title: "Tell us what you need", body: "Describe the challenge and how you prefer to be contacted." },
   { title: "We review it", body: "Our team reads the information you provide." },
   { title: "We respond", body: "A reply comes through the contact details you gave." },
+]
+
+const bookingSteps = [
+  { title: "Choose a time", body: "Open slots are shown in your own timezone." },
+  { title: "Leave your details", body: "Your name and email stay with the booking." },
+  { title: "Meet Apex Point", body: "A confirmation arrives with the time you picked." },
 ]
 
 export default function EnquiryPage({ intent }) {
@@ -37,8 +46,52 @@ export default function EnquiryPage({ intent }) {
           : [{ label: "Home", to: "/" }, { label: "Contact Us", to: "/contact-us" }, { label: page.title }]
       }
     >
+      {intent === "general" ? (
+        <section className="bg-mist" aria-labelledby="book-heading">
+          <div className="mx-auto grid max-w-8xl items-start gap-10 px-4 py-14 sm:px-6 sm:py-20 lg:grid-cols-12 lg:gap-14">
+            <div className="lg:sticky lg:top-28 lg:col-span-4">
+              <SectionHeading
+                id="book-heading"
+                eyebrow="Book a time"
+                title="Choose a time that suits you."
+                intro="Reserve a conversation with Apex Point. The scheduler confirms the time as soon as you finish."
+              />
+              <ol className="mt-8 space-y-5">
+                {bookingSteps.map((step, index) => (
+                  <li key={step.title} className="flex items-start gap-4">
+                    <span className="grid size-8 shrink-0 place-items-center rounded-sm bg-navy text-sm font-bold text-white tabular-nums">
+                      {index + 1}
+                    </span>
+                    <div>
+                      <p className="font-semibold text-navy">{step.title}</p>
+                      <p className="mt-0.5 text-sm leading-relaxed text-navy/70">{step.body}</p>
+                    </div>
+                  </li>
+                ))}
+              </ol>
+            </div>
+
+            <Reveal delay={0.1} className="lg:col-span-8">
+              <div className="overflow-hidden rounded-md border border-navy/10 bg-white shadow-[0_24px_60px_-28px_rgba(0,20,73,0.35)]">
+                <div className="h-px bg-gold" aria-hidden="true" />
+                <CalendlyEmbed />
+              </div>
+            </Reveal>
+          </div>
+        </section>
+      ) : null}
+
       <section className="bg-white" aria-label="Enquiry form">
         <div className="mx-auto grid max-w-8xl gap-10 px-4 py-14 sm:px-6 sm:py-20 lg:grid-cols-12 lg:gap-14">
+          {intent === "general" ? (
+            <div className="lg:col-span-12">
+              <SectionHeading
+                eyebrow="Prefer to write"
+                title="Send a message instead."
+                intro="Use the form for a project note, a quotation, or a question that does not need a meeting."
+              />
+            </div>
+          ) : null}
           <Reveal className="lg:col-span-7 lg:order-1">
             <div className="rounded-md border border-navy/10 bg-white p-6 shadow-[0_24px_60px_-28px_rgba(0,20,73,0.3)] sm:p-10">
               <EnquiryForm defaultType={page.enquiryType} />
@@ -84,19 +137,11 @@ export default function EnquiryPage({ intent }) {
                         <Icon aria-hidden="true" className="mt-0.5 size-4 shrink-0 text-gold" />
                         <span>
                           <span className="block text-mist">{detail.label}</span>
-                          {detail.href ? (
-                            <a
-                              href={detail.href}
-                              className="inline-flex min-h-11 items-center font-medium text-white transition-colors duration-200 hover:text-gold"
-                              {...(detail.href.startsWith("http")
-                                ? { target: "_blank", rel: "noopener noreferrer" }
-                                : {})}
-                            >
-                              {detail.value}
-                            </a>
-                          ) : (
-                            <span className="font-medium text-white">{detail.value}</span>
-                          )}
+                          <ContactDetailValue
+                            detail={detail}
+                            linkClassName="inline-flex min-h-11 items-center font-medium text-white transition-colors duration-200 hover:text-gold"
+                            plainClassName="inline-flex min-h-11 items-center font-medium text-white"
+                          />
                         </span>
                       </li>
                     )
